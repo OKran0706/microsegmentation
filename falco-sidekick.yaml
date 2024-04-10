@@ -1,0 +1,22 @@
+# config:
+#   customfields: "minikube=true"
+#   debug: true
+#   falco:
+#     priority: "debug"
+#   customOutputs:
+#     - name: "http-output"
+#       url: "http://192.168.29.216:5000"
+#       # You can customize headers as needed
+#       # headers:
+#       #   Custom-Header: "value"
+#   # Enable custom output
+#   customoutput:
+#     enabled: true
+
+config:
+  customOutputs:
+    - name: netcat
+      format: "text"
+      url: "http://192.168.29.216:5000"
+  customoutput:
+    enabled: true

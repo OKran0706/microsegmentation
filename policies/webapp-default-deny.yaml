@@ -1,0 +1,16 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-intra-webapp
+  namespace: webapp # Replace webapp with your actual namespace
+spec:
+  podSelector: {} # Selects all pods in the namespace
+  ingress:
+  - from:
+    - podSelector: {} # Allows ingress traffic from any pod in the namespace
+  egress:
+  - to:
+    - podSelector: {} # Allows egress traffic to any pod in the namespace
+  policyTypes:
+  - Ingress
+  - Egress

@@ -1,0 +1,24 @@
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-${from_ns}-to-${to_ns}
+  namespace: ${to_ns}
+spec:
+  podSelector: {} # Selects all pods in example-namespace2
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ${from_ns}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ${from_ns}
+  policyTypes:
+  - Ingress
+  - Egress
+
+
+

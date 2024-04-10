@@ -1,0 +1,24 @@
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-kube-public-to-webapp
+  namespace: webapp
+spec:
+  podSelector: {} # Selects all pods in example-namespace2
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-public
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-public
+  policyTypes:
+  - Ingress
+  - Egress
+
+
+

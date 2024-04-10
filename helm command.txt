@@ -1,0 +1,1 @@
+helm install falco falcosecurity/falco   --set driver.kind=modern_ebpf   --set tty=true   --set falcosidekick.enabled=true   --set falcosidekick.config.webhook.address="http://host.minikube.internal:5000/webhook"

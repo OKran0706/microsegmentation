@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kali-linux
+spec:
+  containers:
+  - name: kali-linux
+    image: kalilinux/kali-rolling
+    command: ["/bin/sleep", "infinity"]

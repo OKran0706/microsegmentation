@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: metasploitable
+  namespace: insecure-environment
+spec:
+  containers:
+  - name: metasploitable
+    image: tleemcjr/metasploitable2 
+    command: ["/bin/sleep", "infinity"]
+    ports:
+    - containerPort: 3306 # Assuming you want to expose SQL Server
