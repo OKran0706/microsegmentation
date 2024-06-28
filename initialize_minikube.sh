@@ -1,5 +1,5 @@
 #start
-minikube start --driver=docker --network-plugin=cni --cni=false --memory 4096
+minikube start --driver=docker --network-plugin=cni --cni=false 
 
 #install cilium
 cilium install --version 1.14.8

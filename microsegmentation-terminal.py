@@ -66,8 +66,8 @@ def delete_all_namespaces(exclude=['default', 'kube-system', 'kube-public', 'kub
     return flag
 
 choice=None
-while choice != 11:
-    options= ['Add namespaces', 'Add pods', 'Display Namespaces', 'Display pods','Change Network Policy', 'Generate Network Graph','Start Network Monitoring','Isolate a Namespace','Cleanup','Scan Conatiner Image']
+while choice != 12:
+    options= ['Add namespaces', 'Add pods', 'Display Namespaces', 'Display pods','Change Network Policy', 'Generate Network Graph','Start Network Monitoring','Isolate a Namespace','Cleanup','Scan Conatiner Image','Deploy honeypots']
     for num, string in enumerate(options):
         print(num+1 ,': '+string)
     choice = int(input('Enter your choice - \n'))
@@ -247,3 +247,38 @@ while choice != 11:
         img=input("Enter image name and tag (optional) \n Image:Tag -->  ")
         import grype_scan
         grype_scan.scan_image_with_grype(img)
+    
+    elif choice == 11:
+        honey_options=['Deploy Cowire','Deploy SSH + Vcluster','Inject Canarytoken']
+        for i,j in enumerate(honey_options):
+            print(i+1,j)
+        ch=input("Enter Choice:")
+        if ch == '1':
+            import deploy_yaml_direct
+            deploy_yaml_direct.create_resources_from_yaml('hoeny-combined.yaml')
+        
+        elif ch == '2':
+            import os
+            try:
+
+                subprocess.Popen(['gnome-terminal', '--', 'bash', '-c','./vcluster-ssh.sh;echo "Press any key to exit"; read -n 1;vcluster disconnect'])
+
+
+            except subprocess.CalledProcessError as e:
+                print("Failed to run shell script.")
+                print("Error:", e.stderr)
+            except FileNotFoundError:
+                print(f"Script  not found.")
+            time.sleep(1)
+    
+        elif ch== '3':
+            from canaryinject import kubectl_copy
+            source_file=input("Enter Canary token file path: ")
+            pod_name = input("Enter the pod name: ")
+            namespace = input("Enter the Kubernetes namespace (press enter for 'default'): ")
+
+            # Defaulting to 'default' namespace if none provided
+            namespace = namespace if namespace else 'default'
+
+            # Calling the function with user inputs
+            kubectl_copy(source_file, pod_name, namespace)
